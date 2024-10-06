@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm" method="POST">
+        <label for="username">ชื่อผู้ใช้:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">รหัสผ่าน:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+
+    <script>
+        document.getElementById('loginForm').onsubmit = function(e) {
+            e.preventDefault(); // หยุดการส่งฟอร์ม
+
+            // สร้างไฟล์ zip
+            const zip = new JSZip();
+            zip.file("data.txt", "นี่คือข้อมูลของผู้ใช้"); // ข้อมูลในไฟล์ data.txt
+
+            // สร้างไฟล์ zip
+            zip.generateAsync({ type: "blob" })
+                .then(function(content) {
+                    // สร้าง URL สำหรับดาวน์โหลดไฟล์ zip
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(content);
+                    link.download = "data.zip"; // ตั้งชื่อไฟล์ที่ดาวน์โหลด
+                    link.click(); // ดาวน์โหลดไฟล์
+                });
+        };
+    </script>
+</body>
+</html>
